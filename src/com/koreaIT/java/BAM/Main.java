@@ -10,7 +10,7 @@ public class Main {
 		int lastArticleId = 0;
 		while(true) {
 			System.out.printf("명령어)");
-			String cmd = sc.nextLine();
+			String cmd = sc.nextLine().trim();
 			if(cmd.length() == 0) {
 				System.out.println("명령어를 입력해 주세요");
 				continue;
