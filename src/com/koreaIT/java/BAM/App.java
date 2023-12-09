@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.koreaIT.java.BAM.dto.Article;
+import com.koreaIT.java.BAM.dto.Member;
 import com.koreaIT.java.BAM.util.Util;
 
 public class App {	
 	private  List<Article> articles;
+	private  List<Member> members;
 	
 	App() {
 		articles  = new ArrayList<>();
+		members  = new ArrayList<>();
 	} 
 	
 	public void run() {		
@@ -33,11 +36,27 @@ public class App {
 			if(cmd.equals("exit")) {
 				break;
 			}
-			if(cmd.equals("article write")) {
-				int id = articles.size() + 1;
-//				lastArticleId=id;
+			if(cmd.equals("member join")) {
+				int id = members.size() + 1; 
 				String regDate = Util.getNowDateStr();
-//				System.out.println("regDate : " + regDate);				
+ 			
+				System.out.printf("로그인 아이디 : ");
+				String loginId = sc.nextLine();
+				System.out.printf("로그인 비밀번호 : ");			
+				String loginPw = sc.nextLine();
+				System.out.printf("비밀번호 확인: ");			
+				String loginPwChk = sc.nextLine();
+				System.out.printf("이름 : ");			
+				String name = sc.nextLine();
+				
+				Member member = new Member(id,regDate, loginId, loginPw, name);
+				members.add(member); 
+						
+				System.out.printf("%s회원님 로그인 되었습니다\n",loginId); 
+				
+			} else if(cmd.equals("article write")) {
+				int id = articles.size() + 1; 
+				String regDate = Util.getNowDateStr(); 			
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				System.out.printf("내용 : ");			
@@ -47,7 +66,8 @@ public class App {
 				articles.add(article);
 						
 				System.out.printf("%d번 글이 생성되었습니다\n",id); 
-			}else if (cmd.startsWith("article list")) {
+				
+			} else if (cmd.startsWith("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시물이 없습니다.");
 					continue;
@@ -75,7 +95,8 @@ public class App {
 					Article article=forPrintArticles.get(i);
 					System.out.printf("%d	|	%s	|	%s	|	%d\n", article.id, article.title, article.regDate, 
 							article.viewCnt);					
-				}				
+				}	
+				
 			} else if(cmd.startsWith("article detail ")) {
 				
 				String[] cmdBits = cmd.split(" ");
