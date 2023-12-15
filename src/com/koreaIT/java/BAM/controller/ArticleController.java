@@ -7,13 +7,19 @@ import java.util.Scanner;
 import com.koreaIT.java.BAM.dto.Article;
 import com.koreaIT.java.BAM.util.Util;
 
-public class ArticleController {
+public class ArticleController extends Controller{
 	List<Article> articles; 
 	Scanner sc;
+	String cmd;
 
 	public ArticleController(List<Article> articles, Scanner sc) {
 		this.articles = articles;
 		this.sc = sc;
+	}
+	
+	@Override
+	public void doAction(String cmd) {
+		this.cmd = cmd;
 	}
 	
 	public void doWrite() {
@@ -29,7 +35,7 @@ public class ArticleController {
 		System.out.printf("%d번 글이 생성되었습니다\n",id);
 		
 	}
-	public void showList(String cmd) {
+	public void showList() {
 		if (articles.size() == 0) {
 			System.out.println("게시물이 없습니다.");
 			return; //return값이 없을때(void) 그냥 순수하게 함수를 종료한다.
@@ -60,7 +66,7 @@ public class ArticleController {
 		}
 		
 	}
-	public void showDetail(String cmd) {
+	public void showDetail() {
 		
 		String[] cmdBits = cmd.split(" ");
 		int id = Integer.parseInt(cmdBits[2]);
@@ -103,7 +109,7 @@ public class ArticleController {
 		
 
 	}
-	public void doModify(String cmd) {
+	public void doModify() {
 		String[] cmdBits = cmd.split(" ");
 		int id = Integer.parseInt(cmdBits[2]);
 		
@@ -125,7 +131,7 @@ public class ArticleController {
 		System.out.printf("%d번 글이 수정되었습니다.\n",id);
 		
 	}
-	public void doDelete(String cmd) {
+	public void doDelete() {
 		
 		String[] cmdBits = cmd.split(" ");
 		int id = Integer.parseInt(cmdBits[2]);
