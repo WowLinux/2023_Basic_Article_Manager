@@ -18,8 +18,27 @@ public class ArticleController extends Controller{
 	}
 	
 	@Override
-	public void doAction(String cmd) {
+	public void doAction(String cmd, String methodName) {
 		this.cmd = cmd;
+		
+		switch(methodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList();
+			break;
+		case "detail":
+			showDetail();
+			break;
+		case "modify":
+			doModify();
+			break;
+		case "delete":
+			doDelete();
+			break;
+		
+		}
 	}
 	
 	public void doWrite() {
@@ -69,6 +88,12 @@ public class ArticleController extends Controller{
 	public void showDetail() {
 		
 		String[] cmdBits = cmd.split(" ");
+		
+		if(cmdBits.length == 2) {
+			System.out.println("명령어를 확인해 주세요.");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 	
 		Article foundArticle = getArticleById(id);				
@@ -111,6 +136,12 @@ public class ArticleController extends Controller{
 	}
 	public void doModify() {
 		String[] cmdBits = cmd.split(" ");
+		
+		if(cmdBits.length == 2) {
+			System.out.println("명령어를 확인해 주세요.");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 		
 		Article foundArticle = getArticleById(id);
@@ -134,6 +165,12 @@ public class ArticleController extends Controller{
 	public void doDelete() {
 		
 		String[] cmdBits = cmd.split(" ");
+		
+		if(cmdBits.length == 2) {
+			System.out.println("명령어를 확인해 주세요.");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 		
 		int foundIndex = getArticleIndexById(id);

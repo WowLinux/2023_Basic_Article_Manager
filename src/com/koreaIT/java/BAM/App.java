@@ -59,25 +59,7 @@ public class App {
 				continue;
 			}
 			
-			controller.doAction(cmd);
-			
-//			if(cmd.equals("member join")) {
-//				memberController.doJoin();
-//				
-//			} else if(cmd.equals("article write")) {
-//				 articleController.doWrite();
-//				
-//			} else if (cmd.startsWith("article list")) {
-//				articleController.showList(cmd);
-//			} else if(cmd.startsWith("article detail ")) {
-//				articleController.showDetail(cmd);	 
-//			} else if(cmd.startsWith("article modify ")) {
-//				articleController.doModify(cmd);
-//		    } else if(cmd.startsWith("article delete ")) {
-//				articleController.doDelete(cmd);
-//			} else { 
-//				System.out.println("존재하지 않는 명령어 입니다.");				
-//			}	 
+			controller.doAction(cmd,methodName);
 		}
 		
 		System.out.println("==프로그램 끝");		
