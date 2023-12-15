@@ -1,5 +1,6 @@
 package com.koreaIT.java.BAM.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,12 +9,13 @@ import com.koreaIT.java.BAM.util.Util;
 
 public class MemberController extends Controller{
 
-	List<Member> members; 
-	Scanner sc;
-	String cmd;
+	private List<Member> members; 
+	private Scanner sc;
+	private String cmd;
+	private Member loginedMember;
 	
-	public MemberController(List<Member> members, Scanner sc) {
-		this.members = members;
+	public MemberController(Scanner sc) {
+		this.members = new ArrayList<>();
 		this.sc = sc;
 	
 	}
@@ -26,9 +28,44 @@ public class MemberController extends Controller{
 		case "join":
 			doJoin();
 			break;
+		case "login":
+			doLogin();
+			break;
 		}
 	}
 	
+	private void doLogin() {
+		System.out.printf("로그인 아이디 : ");			
+		String loginId = sc.nextLine();
+		System.out.printf("로그인 비밀번호 : ");			
+		String loginPw = sc.nextLine();
+		
+//		System.out.printf("%s, %s\n", loginId, loginPw);
+//      사용자의 입력 아이디와 일치하는 회원이 우리한테 있나?
+		Member member = getMemberByLoginId(loginId);
+		
+		if(member == null) {
+			System.out.println("일치하는 회원이 없습니다.");
+			return; 
+		}
+		if(member.loginPw.equals(loginPw) == false) {
+			System.out.println("비밀번를 확인하세요");
+			return;
+		}
+		loginedMember = member;
+		System.out.println("로그인 성공!");
+	}
+
+	private Member getMemberByLoginId(String loginId) {
+		int index = getMemberIndexByLoginId(loginId);
+		
+		if(index != -1) {
+			return members.get(index);
+			
+		}
+		return null;
+	}
+
 	public void doJoin() {
 		int id = members.size() + 1; 
 		String regDate = Util.getNowDateStr();
