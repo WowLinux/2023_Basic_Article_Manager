@@ -43,7 +43,7 @@ public class App {
 			String controllerName = cmdBits[0];//article
 			String methodName = cmdBits[1];  //list
 			
-			Controller controller = null;
+			Controller controller = null; //Controller타입으로 만든 변수 controller
 			
 			if(controllerName.equals("article")) {
 				controller = articleController;				
@@ -53,7 +53,27 @@ public class App {
 				System.out.println("존재 하지 않는 명령어 입니다.");
 				continue;
 			}
+//			String  actionName = controllerName + "/" + methodName;
 			
+			switch(methodName) {
+			case "write":
+			case "modify":
+			case "delete":
+			case "logout":
+			case "profile":
+				if(Controller.isLogined() == false) {
+					System.out.println("로그인 후 이용 가능 합니다.");
+					continue;
+				}				
+				break;
+			case "login":
+			case "join":
+				if(Controller.isLogined()) {
+					System.out.println("로그아웃 후 이용해 주세요.");
+					continue;
+				}
+				break;
+			}
 			controller.doAction(cmd,methodName);
 		}
 		

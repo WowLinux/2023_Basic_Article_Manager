@@ -23,10 +23,6 @@ public class ArticleController extends Controller{
 		
 		switch(methodName) {
 		case "write":
-			if(isLogined() == false) {
-				System.out.println("로그인 후 이용 가능 합니다.");
-				break;		
-			}
 			doWrite();
 			break;
 		case "list":
@@ -36,17 +32,9 @@ public class ArticleController extends Controller{
 			showDetail();
 			break;
 		case "modify":
-			if(isLogined() == false) {
-				System.out.println("로그인 후 이용 가능 합니다.");
-				break;		
-			}			
 			doModify();
 			break;
 		case "delete":
-			if(isLogined() == false) {
-				System.out.println("로그인 후 이용 가능 합니다.");
-				break;		
-			}	
 			doDelete();
 			break;
 		default: 	
