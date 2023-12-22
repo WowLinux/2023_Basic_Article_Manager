@@ -36,9 +36,17 @@ public class ArticleController extends Controller{
 			showDetail();
 			break;
 		case "modify":
+			if(isLogined() == false) {
+				System.out.println("로그인 후 이용 가능 합니다.");
+				break;		
+			}			
 			doModify();
 			break;
 		case "delete":
+			if(isLogined() == false) {
+				System.out.println("로그인 후 이용 가능 합니다.");
+				break;		
+			}	
 			doDelete();
 			break;
 		default: 	
@@ -111,6 +119,7 @@ public class ArticleController extends Controller{
 			return;					
 		}  
 		foundArticle.addViewCnt();
+		
 		System.out.printf("번호 : %d\n",foundArticle.id);
 		System.out.printf("날짜 : %s\n",foundArticle.regDate);
 		System.out.printf("작성자 : %s\n",foundArticle.memberId);
@@ -160,6 +169,10 @@ public class ArticleController extends Controller{
 			return;					
 		}
 		
+		if(foundArticle.memberId != loginedMember.id) {
+			System.out.println("권한이 없습니다.");
+			return;			
+		} 
 		System.out.printf("수정할 제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("수정할 내용 : ");			
@@ -171,8 +184,8 @@ public class ArticleController extends Controller{
 		System.out.printf("%d번 글이 수정되었습니다.\n",id);
 		
 	}
-	public void doDelete() {
-		
+	
+	public void doDelete() {		
 		String[] cmdBits = cmd.split(" ");
 		
 		if(cmdBits.length == 2) {
@@ -182,13 +195,21 @@ public class ArticleController extends Controller{
 		
 		int id = Integer.parseInt(cmdBits[2]);
 		
-		int foundIndex = getArticleIndexById(id);
+//		int foundIndex = getArticleIndexById(id);
+		Article foundArticle = getArticleById(id);
 
-		if(foundIndex == -1) {
+		if(foundArticle == null) {
 			System.out.printf("%d번 게시물은 존재하지 않습니다\n",id);				
 			return;					
 		} 
-		articles.remove(foundIndex);
+		
+		
+		if(foundArticle.memberId != loginedMember.id) {
+			System.out.println("권한이 없습니다.");
+			return;			
+		} 
+		
+		articles.remove(foundArticle);
 		System.out.printf("%d번 게시물이 삭제되었습니다\n",id);
 		
 	}
